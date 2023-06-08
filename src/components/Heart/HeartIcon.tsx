@@ -1,4 +1,5 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useRef } from 'react';
+import { animate } from 'framer-motion';
 import { HeartContext } from './HeartContext';
 
 interface HeartProps {
@@ -6,10 +7,28 @@ interface HeartProps {
 }
 
 function HeartIcon({ size }: HeartProps) {
+  const heartRef = useRef<SVGSVGElement>(null);
   const heartContext = useContext(HeartContext);
-  const isHeartLiked = heartContext.count > 0;
+  const { count } = heartContext;
+  const isHeartLiked = count > 0;
+
+  useEffect(() => {
+    if (heartRef.current && count > 0) {
+      animate(
+        heartRef.current,
+        {
+          scale: [1, 1.5, 1, 1],
+          opacity: [0, 0.25, 0.25, 1],
+        },
+        {
+          ease: 'easeOut',
+        }
+      );
+    }
+  }, [count]);
   return (
     <svg
+      ref={heartRef}
       xmlns='http://www.w3.org/2000/svg'
       fill={isHeartLiked ? '#a83f39' : 'currentColor'}
       viewBox='0 0 24 24'
