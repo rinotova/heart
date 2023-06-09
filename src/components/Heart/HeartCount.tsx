@@ -5,7 +5,7 @@ function HeartCount() {
   const heartContext = useContext(HeartContext);
   return (
     <span>
-      <p className='text-black text-sm'>{heartContext.count}</p>
+      <p className='text-black text-sm -ml-6'>{heartContext.count}</p>
     </span>
   );
 }

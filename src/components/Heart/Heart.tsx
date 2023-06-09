@@ -3,11 +3,23 @@ import {
   HeartContext,
   HeartContextType,
   heartInitialState,
-} from './Heart/HeartContext';
+} from './HeartContext';
+import HeartIcon from './HeartIcon';
+import HeartCount from './HeartCount';
+import HeartPlus from './HeartPlus';
 
-function Heart({ children }: { children: React.ReactNode }) {
-  const [contextState, setContext] =
-    useState<HeartContextType>(heartInitialState);
+function Heart({
+  children,
+  count = 0,
+}: {
+  children: React.ReactNode;
+  count?: number;
+  onClickCallback?: () => void;
+}) {
+  const [contextState, setContext] = useState<HeartContextType>({
+    ...heartInitialState,
+    count,
+  });
 
   const heartClickedHandler = () => {
     setContext((prevContext) => ({
@@ -27,5 +39,9 @@ function Heart({ children }: { children: React.ReactNode }) {
     </HeartContext.Provider>
   );
 }
+
+Heart.icon = HeartIcon;
+Heart.count = HeartCount;
+Heart.plus = HeartPlus;
 
 export default Heart;

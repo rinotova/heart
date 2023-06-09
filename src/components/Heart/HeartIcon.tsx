@@ -30,7 +30,9 @@ function HeartIcon({ size }: HeartProps) {
     <svg
       ref={heartRef}
       xmlns='http://www.w3.org/2000/svg'
-      fill={isHeartLiked ? '#a83f39' : 'currentColor'}
+      fill={isHeartLiked ? '#a83f39' : 'none'}
+      strokeWidth={!isHeartLiked ? '1' : '0'}
+      stroke='black'
       viewBox='0 0 24 24'
       width={size ?? 42}
       height={size ?? 42}
