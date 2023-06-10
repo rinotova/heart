@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import {
   HeartContext,
   HeartContextType,
@@ -11,25 +11,32 @@ import HeartPlus from './HeartPlus';
 function Heart({
   children,
   count = 0,
+  onClick,
 }: {
   children: React.ReactNode;
   count?: number;
-  onClickCallback?: () => void;
+  onClick?: () => void;
 }) {
-  const [contextState, setContext] = useState<HeartContextType>({
-    ...heartInitialState,
-    count,
-  });
-
+  const isControlled = !!(count && onClick);
+  const [contextState, setContext] = useState<HeartContextType>(
+    { count } || heartInitialState
+  );
   const heartClickedHandler = () => {
-    setContext((prevContext) => ({
-      ...prevContext,
-      count: prevContext.count + 1,
-    }));
+    isControlled
+      ? onClick()
+      : setContext((prevContext) => ({
+          ...prevContext,
+          count: prevContext.count + 1,
+        }));
   };
 
+  const memoizedContextValue = useMemo(
+    () => (isControlled ? { count } : contextState),
+    [contextState, isControlled, count]
+  );
+
   return (
-    <HeartContext.Provider value={{ ...contextState, setContext }}>
+    <HeartContext.Provider value={memoizedContextValue}>
       <button
         onClick={heartClickedHandler}
         className='cursor-pointer hover:text-[#a83f39] grid grid-cols-2 gap-0 items-center justify-center'

@@ -17,8 +17,8 @@ function HeartIcon({ size }: HeartProps) {
       animate(
         heartRef.current,
         {
-          scale: [1, 1.5, 1, 1],
-          opacity: [0, 0.25, 0.25, 1],
+          scale: [1, 1.5, 1.75, 1],
+          opacity: [0, 0.25, 0.5, 1],
         },
         {
           ease: 'easeOut',
