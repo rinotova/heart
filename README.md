@@ -1,4 +1,4 @@
-# Multiplayer Hangman game
+# Heart likes component
 
 ## Demo
 
